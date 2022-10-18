@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    GameManager gameManager;
     InputManager inputManager;
     PlayerLocomotion playerLocomotion;
     CameraManager cameraManager;
@@ -14,6 +15,7 @@ public class PlayerManager : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
         cameraManager = FindObjectOfType<CameraManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -29,5 +31,13 @@ public class PlayerManager : MonoBehaviour
     private void LateUpdate()
     {
         cameraManager.HandleAllCameraMovement();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("GameStart"))
+        {
+            gameManager.GoToNewScene();
+        }
     }
 }

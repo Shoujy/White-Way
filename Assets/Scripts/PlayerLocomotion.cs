@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     InputManager inputManager;
+    Interactor interactor;
 
     Vector3 moveDirection;
     Transform cameraObject;
@@ -16,12 +17,18 @@ public class PlayerLocomotion : MonoBehaviour
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
+        interactor = GetComponent<Interactor>();
         playerRigidbody = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
     }
 
     public void HandleAllMovements()
     {
+        if(interactor.IsInteracting) // If we interact with chest - don't move
+        {
+            return;
+        }
+
         HandleMovement();
         HandleRotation();
     }

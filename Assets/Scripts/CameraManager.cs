@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    public Transform targetTransform;
+    public PlayerManager playerManager;
 
     private Vector3 cameraFollowVelocity = Vector3.zero;
     public float cameraFollowSpeed = 2;
+
+    private void Awake()
+    {
+        playerManager = FindObjectOfType<PlayerManager>();
+    }
 
     public void HandleAllCameraMovement()
     {
@@ -17,7 +22,7 @@ public class CameraManager : MonoBehaviour
     private void FollowTarget()
     {
         Vector3 targetPosition = Vector3.SmoothDamp
-            (transform.position, targetTransform.position, ref cameraFollowVelocity, cameraFollowSpeed);
+            (transform.position, playerManager.transform.position, ref cameraFollowVelocity, cameraFollowSpeed);
 
         transform.position = targetPosition;
     }
